@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data } = await useFetch<{ data: any[] }>('http://localhost:1337/api/projets?populate=photos')
+const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/projets?populate=photos')
 
 // récupère directement le tableau
 const projets = computed(() => {
