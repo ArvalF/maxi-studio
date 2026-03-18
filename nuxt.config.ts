@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
-      cmsUrl: ''
+      cmsUrl: process.env.NUXT_PUBLIC_CMS_URL || 'http://localhost:1337'
     }
   }
 })
