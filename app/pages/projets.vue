@@ -1,11 +1,18 @@
 <script setup lang="ts">
 const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/projets?populate=photos')
+const { data: types } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/types')
 
 // récupère directement le tableau
 const projets = computed(() => {
+  console.log('projets', data.value)
   return data.value?.data || []
 })
 
+// récupère directement le tableau
+const categories = computed(() => {
+  console.log('categories', types.value)
+  return types.value?.data || []
+})
 const selectedProjetKey = ref('')
 
 const getProjetKey = (projet: any, index: number) => {
@@ -34,25 +41,43 @@ watch(
 </script>
 
 <template>
-  <div class="w-full h-full min-h-0 flex flex-col gap-4">
+  <MainContentSkeleton>
+    <template #main-content>
+        <div class="w-full h-full min-h-0 flex flex-col gap-4">
     <div class="w-full overflow-x-auto">
-      <div class="flex w-max min-w-full gap-2 pb-2">
+      <div class="flex flex-row"> 
+          <button
+          v-for="(category, index) in categories"
+          :key="category?.id ?? index"
+          type="button"
+          class="text-left"
+        >
+          {{ category.name }}
+        </button>
+      </div>
+      <div class="flex flex-col w-max min-w-full gap- pb-2">
         <button
           v-for="(projet, index) in projets"
           :key="getProjetKey(projet, index)"
           type="button"
-          class="shrink-0 border border-black px-3 py-2 whitespace-nowrap"
-          :class="selectedProjetKey === getProjetKey(projet, index) ? 'bg-black text-white' : 'bg-white text-black'"
+          class="text-left"
+          :class="selectedProjetKey === getProjetKey(projet, index) ? 'underline' : ''"
           @click="selectedProjetKey = getProjetKey(projet, index)"
         >
           {{ projet.titre }}
         </button>
       </div>
     </div>
+  </div>
+    </template> 
 
-    <Project
+    <template #img-content>
+      <Project
       v-if="selectedProjet"
       :projet="selectedProjet"
     />
-  </div>
+    </template>
+  </MainContentSkeleton>
 </template>
+<style>
+</style>
