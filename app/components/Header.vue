@@ -33,15 +33,15 @@ const items = computed<NavigationMenuItem[]>(() => [
 
 </script>
 <template>
-    <div class="grid grid-cols-[5fr_2fr] gap-2 items-end">
+    <div class="grid grid-cols-[5fr_2fr] gap-10 items-center">
       <div class="">
         <NuxtLink to="/">
-          <img class="max-h-20" src="assets/img/maxistudio-logo.jpg"/>
+          <img class="max-h-40" src="assets/img/maxistudio-logo.jpg"/>
         </NuxtLink>
       </div>  
       <div>
-        <nav class="hidden md:flex gap-6">
-          <ul class="inline-flex">
+        <nav class="hidden md:flex">
+          <ul class="inline-flex gap-6 flex-wrap  justify-items-stretch">
            <li
              v-for="item in items"
              class="min-w-20 decoration-0"
@@ -49,7 +49,7 @@ const items = computed<NavigationMenuItem[]>(() => [
            <NuxtLink
              :to="item.to"
              :class="{ active: item.active }"
-             class="hover:font-bold flex items-center m-w-5"
+             class="hover:underline flex items-center text-lg"
            >
              {{ item.label?.toUpperCase() }}
            </NuxtLink>
@@ -65,7 +65,6 @@ const items = computed<NavigationMenuItem[]>(() => [
 
 <style scoped>
 .active {
-  color: #f0a500;
-  font-weight: bold;
+  text-decoration: underline;
 } 
 </style>
