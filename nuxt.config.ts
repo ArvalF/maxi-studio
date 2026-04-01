@@ -8,5 +8,12 @@ export default defineNuxtConfig({
     public: {
       cmsUrl: process.env.NUXT_PUBLIC_CMS_URL || 'http://localhost:1337'
     }
+  },
+  app: {
+  rootAttrs: { class: 'h-full' },
+  head: {
+    htmlAttrs: { class: 'h-full' },
+    bodyAttrs: { class: 'h-full overflow-hidden' }
   }
+}
 })
