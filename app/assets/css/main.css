@@ -21,7 +21,38 @@
   --ui-header-height: calc(var(--spacing) * 12);
 } */
 
-.custom-scroll::-webkit-scrollbar { width: 6px; }
-.custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
-.custom-scroll::-webkit-scrollbar-thumb { background: #888; border-radius: 9999px; }
-.custom-scroll::-webkit-scrollbar-thumb:hover { background: #555; }
+/* =============================
+   CUSTOM SCROLLBAR
+   ============================= */
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  margin-left: 2rem; /* ⚠️ N'a pas d'effet sur une scrollbar verticale */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Masquer les flèches (boutons haut/bas) */
+::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
