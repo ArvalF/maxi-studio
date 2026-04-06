@@ -36,20 +36,20 @@ const items = computed<NavigationMenuItem[]>(() => [
     <div class="grid grid-cols-[5fr_2fr] gap-10 items-center">
       <div class="">
         <NuxtLink to="/">
-          <img class="max-h-40" src="assets/img/maxistudio-logo.jpg"/>
+          <img class="max-h-[4rem]" src="assets/img/maxistudio-logo.jpg"/>
         </NuxtLink>
       </div>  
       <div>
         <nav class="hidden md:flex">
-          <ul class="inline-flex gap-6 flex-wrap  justify-items-stretch">
+          <ul class="inline-flex gap-4 flex-wrap  justify-items-stretch">
            <li
              v-for="item in items"
-             class="min-w-20 decoration-0"
+             class="min-w-12 decoration-0"
            >
            <NuxtLink
              :to="item.to"
              :class="{ active: item.active }"
-             class="hover:underline flex items-center text-lg"
+             class="hover:underline flex items-center text-base"
            >
              {{ item.label?.toUpperCase() }}
            </NuxtLink>

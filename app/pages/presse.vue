@@ -11,7 +11,8 @@ const presses = computed(() => {
 <template>
   <MainContentSkeleton>
     <template #img-content>
-        <div class="flex">
+        <div class="flex min-h-0 h-full">
+        <div class="flex gap-4 items-center">
           <div v-for="press in presses">
 
             <a v-if="press.printed" :href="useStrapiBaseUrl() + press.pdf_article.url" target="_blank">
@@ -21,6 +22,7 @@ const presses = computed(() => {
             <img :src="useStrapiBaseUrl() + press.logo_magazine.url" height="200rem" width="200rem">
             </a>
           </div>
+        </div>
         </div>
     </template>
   </MainContentSkeleton>
