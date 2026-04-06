@@ -2,7 +2,9 @@ export interface Projet {
   id: number | string
   titre: string
   description: string
-  photos: string[]
+  photos: string[],
+  location?: string,
+  date: string
 }
 
 interface StrapiV4Media {

@@ -4,7 +4,10 @@
           <!-- Ligne 1 -->
           <slot name="header-content"></slot>
           <!-- Ligne 2 -->
-          <div class="grid grid-cols-[5fr_2fr] gap-10 min-h-0 h-full overflow-hidden">
+          <!-- <div class="grid grid-cols-[5fr_2fr] gap-10 min-h-0 h-full overflow-hidden">
+            <slot name="main-content"></slot>
+          </div> -->
+          <div class="min-h-0 h-full overflow-hidden">
             <slot name="main-content"></slot>
           </div>
         

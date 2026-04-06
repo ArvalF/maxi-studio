@@ -14,9 +14,9 @@ const countPhotos = computed(() => {
     return props.projet.photos.length
   return 0
 })
-const paginationGap = '8px'
+const paginationGap = '5px'
 const mainContentGap= '40px'
-const paginationButtonSize = '15px'
+const paginationButtonSize = '10px'
 const paginationLength = computed(() => {
   return (countPhotos.value - 2) * parseInt(paginationGap) + countPhotos.value * parseInt(paginationButtonSize)
 })
@@ -99,7 +99,7 @@ onMounted(() => {
   height: v-bind(paginationButtonSize);
   width: v-bind(paginationButtonSize);
   border-radius: 0px;
-  border: solid 1px black;
+  border: solid 1px var(--color-gray-300);
   background-color: white;
 }
 .carousel__pagination-button--active {

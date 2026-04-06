@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import gsap from 'gsap'
+
 const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/projets?populate=photos&populate=types')
 const { data: types } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/types')
 
+const mounted = ref(false);
 // récupère directement le tableau
 const projets = computed(() => {
   console.log('projets', data.value)
@@ -42,6 +45,7 @@ function selectCategory(categoryName: string) {
 }
 
 onMounted(() => {
+  mounted.value = true;
   if (categories.value.length > 0) {
     selectedCategory.value = categories.value[0].name
   }
@@ -54,49 +58,57 @@ onMounted(() => {
 <template>
   <MainContentSkeleton>
     <template #main-content>
-        <div class="w-full min-h-0 overflow-hidden h-full flex flex-col gap-4">
+        <div class="w-full min-h-0 overflow-hidden h-full flex flex-col gap-4 justify-between">
           <div class="w-full">
             <!-- Listes des Catégories -->
-            <div class="flex flex-row gap-4 mb-8 justify-items-start flex-wrap"> 
+             <Transition name="category">
+            <div v-if="mounted" class="flex flex-row gap-4 mb-2 justify-items-start flex-wrap animate-fade-in delay-1000"> 
                 <button
                 v-for="(category, index) in categories"
                 :key="category?.id ?? index"
                 type="button"
-                class="text-base hover:underline"
-                :class="selectedCategory === category.name ? 'underline' : ''"
+                class="text-sm hover:text-black transition duration-300"
+                :class="selectedCategory === category.name ? 'text-black' : ' text-gray-300'"
                 @click="selectCategory(category.name)"
               >
                 {{ category.name.toUpperCase() }}
               </button>
             </div>
+            </Transition> 
+
 
             <!-- Liste des projets -->
-            <div class="flex flex-col w-max min-w-full min-h-0 pb-2 space-between overflow-x-auto">
-              <button
-                v-if="filteredProjets.length > 0"
-                v-for="(projet, index) in filteredProjets"
-                :key="getProjetKey(projet, index)"
-                type="button"
-                class="text-base text-left hover:underline"
-                :class="selectedProjetKey === getProjetKey(projet, index) ? 'underline' : ''"
-                @click="selectedProjetKey = getProjetKey(projet, index)"
-              >
-                {{ projet.titre }}
-              </button>
+            <Transition name="projet-list">
+              <div v-if="mounted" class="flex flex-col w-max min-w-full min-h-0 pb-2 space-between overflow-x-auto animate-fade-in delay-3000">
+                <button
+                  v-if="filteredProjets.length > 0"
+                  v-for="(projet, index) in filteredProjets"
+                  :key="getProjetKey(projet, index)"
+                  type="button"
+                  class="text-sm text-left  hover:text-black transition duration-300"
+                  :class="selectedProjetKey === getProjetKey(projet, index) ? 'text-black' : ' text-gray-300'"
+                  @click="selectedProjetKey = getProjetKey(projet, index)"
+                >
+                  {{ projet.titre.toUpperCase() }}
+                </button>
+              </div>
+            </Transition>
+          </div>
+
+          <Transition name="projet">
+            <!-- Description du projet -->
+            <div v-if="selectedProjet && mounted" class="flex flex-1 flex-col min-w-full min-h-0 justify-start mt-4 pb-[2rem] font-serif animate-fade-in delay-5000">
+              <!-- <h1 class="text-base italic font-bold">{{ selectedProjet.titre }}</h1> -->
+              <div v-if="selectedProjet.location && selectedProjet.date" class="mb-2"><span class="text-base italic" v-if="selectedProjet.location">{{ selectedProjet.location }}</span>, <span v-if="selectedProjet.date">{{ selectedProjet.date }}</span></div>
+             <div class="text-justify min-h-0 overflow-x-auto scrollbar-thin text-base italic">{{ selectedProjet.description }}</div>
             </div>
-          </div>
-
-          <!-- Description du projet -->
-          <div v-if="selectedProjet" class="flex flex-1 flex-col min-w-full min-h-0 justify-end pb-[2rem]">
-            <h1 class="font-bold text-xl mb-1">{{ selectedProjet.titre }}</h1>
-            <div v-if="selectedProjet.location && selectedProjet.date" class="mb-6"><span class="italic font-2" v-if="selectedProjet.location">{{ selectedProjet.location }}</span>, <span v-if="selectedProjet.date">{{ selectedProjet.date }}</span></div>
-           <div class="text-justify min-h-0 overflow-x-auto scrollbar-thin">{{ selectedProjet.description }}</div>
-          </div>
-
-          <!-- Nom du photographe -->
-          <div v-if="selectedProjet?.photograph" class="flex flex-col min-w-full pb-2 items-start">
-            <div class="text-right italic mr-2"> Photo by {{ selectedProjet.photograph }}</div>
-          </div>
+          </Transition>
+          <Transition name="projet">
+            <!-- Nom du photographe -->
+            <div v-if="selectedProjet?.photograph && mounted" class="flex flex-col min-w-full items-start">
+              <div class="text-right text-sm italic mr-2"> Photo by {{ selectedProjet.photograph }}</div>
+            </div>
+          </Transition>
           <div class="h-1">
           </div>
         </div>
@@ -110,5 +122,34 @@ onMounted(() => {
     </template>
   </MainContentSkeleton>
 </template>
-<style>
+<style scoped>
+.category-enter-active,
+.category-leave-active {
+  transition: opacity 1s ease 0.1s;
+}
+
+.category-enter-from,
+.category-leave-to {
+  opacity: 0;
+}
+
+.projet-list-enter-active,
+.projet-list-leave-active {
+  transition: opacity 1s ease 0.3s;
+}
+
+.projet-list-enter-from,
+.projet-list-leave-to {
+  opacity: 0;
+}
+
+.projet-enter-active,
+.projet-leave-active {
+  transition: opacity 1s ease 0.5s;
+}
+
+.projet-enter-from,
+.projet-leave-to {
+  opacity: 0;
+}
 </style>

@@ -36,7 +36,8 @@ const items = computed<NavigationMenuItem[]>(() => [
     <div class="grid grid-cols-[5fr_2fr] gap-10 items-center">
       <div class="">
         <NuxtLink to="/">
-          <img class="max-h-[4rem]" src="assets/img/maxistudio-logo.jpg"/>
+          <div class="font-bold font-mono text-xl">MAXISTUDIO ASSOCIES</div>
+          <!-- <img class="max-h-[4rem]" src="assets/img/maxistudio-logo.jpg"/> -->
         </NuxtLink>
       </div>  
       <div>
@@ -49,7 +50,7 @@ const items = computed<NavigationMenuItem[]>(() => [
            <NuxtLink
              :to="item.to"
              :class="{ active: item.active }"
-             class="hover:underline flex items-center text-base"
+             class="hover:text-black text-gray-300 flex items-center text-base transition duration-300"
            >
              {{ item.label?.toUpperCase() }}
            </NuxtLink>
@@ -65,6 +66,6 @@ const items = computed<NavigationMenuItem[]>(() => [
 
 <style scoped>
 .active {
-  text-decoration: underline;
+  color: black;
 } 
 </style>
