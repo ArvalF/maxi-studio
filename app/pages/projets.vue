@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import gsap from 'gsap'
-
 const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/projets?populate=photos&populate=types')
 const { data: types } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/types')
 
