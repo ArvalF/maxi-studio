@@ -65,7 +65,7 @@ onMounted(() => {
                 v-for="(category, index) in categories"
                 :key="category?.id ?? index"
                 type="button"
-                class="text-sm hover:text-black transition duration-300"
+                class="text-sm hover:text-black transition duration-300 cursor-pointer"
                 :class="selectedCategory === category.name ? 'text-black' : ' text-gray-300'"
                 @click="selectCategory(category.name)"
               >
@@ -83,7 +83,7 @@ onMounted(() => {
                   v-for="(projet, index) in filteredProjets"
                   :key="getProjetKey(projet, index)"
                   type="button"
-                  class="text-sm text-left  hover:text-black transition duration-300"
+                  class="text-sm text-left  hover:text-black transition duration-300 cursor-pointer"
                   :class="selectedProjetKey === getProjetKey(projet, index) ? 'text-black' : ' text-gray-300'"
                   @click="selectedProjetKey = getProjetKey(projet, index)"
                 >

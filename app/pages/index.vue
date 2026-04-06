@@ -1,6 +1,5 @@
 <script setup lang="ts">
-const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/projets?populate=photos&populate=types')
-const { data: types } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/types')
+const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/projets?populate=couverture_projet')
 
 // récupère directement le tableau
 const projets = computed(() => {
@@ -14,11 +13,11 @@ const hoveredProjet = ref<Projet | null>(null)
 <template>
         <div class="flex min-h-0 h-full items-center justify-center gap-6 flex-wrap">
           <template v-for="projet in projets" :key="projet.id">
-            <div v-if="projet.photos && projet.photos.length > 0">
+            <div v-if="projet.couverture_projet" class="w-60">
               <a href="">
                 <img  
                 class="h-50 w-70 grayscale-100 hover:grayscale-0"
-                :src="useStrapiBaseUrl() + projet.photos[0].url" 
+                :src="useStrapiBaseUrl() + projet.couverture_projet.url" 
                 alt=""
                 @mouseover="hoveredProjet = projet"
                 @mouseleave="hoveredProjet = null">
