@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { select } from '#build/ui'
-
 const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/projets?populate=photos&populate=types')
 const { data: types } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/types')
 
@@ -64,7 +62,7 @@ onMounted(() => {
                 v-for="(category, index) in categories"
                 :key="category?.id ?? index"
                 type="button"
-                class="text-lg hover:underline"
+                class="text-base hover:underline"
                 :class="selectedCategory === category.name ? 'underline' : ''"
                 @click="selectCategory(category.name)"
               >
@@ -79,7 +77,7 @@ onMounted(() => {
                 v-for="(projet, index) in filteredProjets"
                 :key="getProjetKey(projet, index)"
                 type="button"
-                class="text-lg text-left hover:underline"
+                class="text-base text-left hover:underline"
                 :class="selectedProjetKey === getProjetKey(projet, index) ? 'underline' : ''"
                 @click="selectedProjetKey = getProjetKey(projet, index)"
               >
@@ -89,8 +87,8 @@ onMounted(() => {
           </div>
 
           <!-- Description du projet -->
-          <div v-if="selectedProjet" class="flex flex-1 flex-col min-w-full min-h-0 justify-end pb-20">
-            <h1 class="font-bold text-2xl mb-1">{{ selectedProjet.titre }}</h1>
+          <div v-if="selectedProjet" class="flex flex-1 flex-col min-w-full min-h-0 justify-end pb-[2rem]">
+            <h1 class="font-bold text-xl mb-1">{{ selectedProjet.titre }}</h1>
             <div v-if="selectedProjet.location && selectedProjet.date" class="mb-6"><span class="italic font-2" v-if="selectedProjet.location">{{ selectedProjet.location }}</span>, <span v-if="selectedProjet.date">{{ selectedProjet.date }}</span></div>
            <div class="text-justify min-h-0 overflow-x-auto scrollbar-thin">{{ selectedProjet.description }}</div>
           </div>
@@ -105,7 +103,7 @@ onMounted(() => {
     </template> 
 
     <template #img-content>
-      <Project
+      <CustomCarousel
       v-if="selectedProjet"
       :projet="selectedProjet"
     />
