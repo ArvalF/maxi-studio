@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/services?populate=photos&populate=service-types')
-const { data: types } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/service-types')
+const { data } = await useStrapi<{ data: any[] }>('services', 'services', 'populate=photos&populate=service_types')
+const { data: types } = await useStrapi<{ data: any[] }>('services-types', 'service-types')
 
 // récupère directement le tableau
 const services = computed(() => {
@@ -71,7 +71,7 @@ onMounted(() => {
             </div>
 
             <!-- Liste des services -->
-            <div class="flex flex-col w-max min-w-full min-h-0 pb-2 space-between overflow-x-auto">
+            <div class="flex flex-col w-max min-w-full min-h-0 pb-2 space-between overflow-x-auto pr-6">
               <button
                 v-if="filteredServices.length > 0"
                 v-for="(service, index) in filteredServices"
@@ -90,7 +90,7 @@ onMounted(() => {
           <div v-if="selectedService" class="flex flex-1 flex-col min-w-full min-h-0 justify-end pb-[2rem]">
             <h1 class="font-bold text-xl mb-1">{{ selectedService.titre }}</h1>
             <div v-if="selectedService.location && selectedService.date" class="mb-6"><span class="italic font-2" v-if="selectedService.location">{{ selectedService.location }}</span>, <span v-if="selectedService.date">{{ selectedService.date }}</span></div>
-           <div class="text-justify min-h-0 overflow-x-auto scrollbar-thin">{{ selectedService.description }}</div>
+           <div class="text-justify min-h-0 overflow-x-auto pr-6 font-serif italic scrollbar-thin">{{ selectedService.description }}</div>
           </div>
 
           <!-- Nom du photographe -->
@@ -105,7 +105,7 @@ onMounted(() => {
     <template #img-content>
       <CustomCarousel
       v-if="selectedService"
-      :service="selectedService"
+      :projet="selectedService"
     />
     </template>
   </MainContentSkeleton>

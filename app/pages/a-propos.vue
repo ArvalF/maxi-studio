@@ -28,7 +28,9 @@ const imageUrl = computed(() => {
       </div>
     </template>
     <template #main-content>
+      <div class="h-full min-h-0 overflow-auto font-serif italic text-justify pr-6">
       {{ textBody }}
+      </div>
     </template>
   </MainContentSkeleton>
 </template>

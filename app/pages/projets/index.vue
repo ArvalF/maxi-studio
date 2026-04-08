@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/projets?populate=photos&populate=types')
-const { data: types } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/types')
+const { data } = await useStrapi<{ data: any[] }>('projets', 'projets', 'populate=photos&populate=types')
+const { data: types } = await useStrapi<{ data: any[] }>('projets-types', 'types')
 
 const mounted = ref(false);
 // récupère directement le tableau
@@ -98,7 +98,7 @@ onMounted(() => {
             <div v-if="selectedProjet && mounted" class="flex flex-1 flex-col min-w-full min-h-0 justify-start mt-4 pb-[2rem] font-serif animate-fade-in delay-5000">
               <!-- <h1 class="text-base italic font-bold">{{ selectedProjet.titre }}</h1> -->
               <div v-if="selectedProjet.location && selectedProjet.date" class="mb-2"><span class="text-base italic" v-if="selectedProjet.location">{{ selectedProjet.location }}</span>, <span v-if="selectedProjet.date">{{ selectedProjet.date }}</span></div>
-             <div class="text-justify min-h-0 overflow-x-auto scrollbar-thin text-base italic">{{ selectedProjet.description }}</div>
+             <div class="text-justify min-h-0 overflow-x-auto pr-6 scrollbar-thin text-base italic">{{ selectedProjet.description }}</div>
             </div>
           </Transition>
           <Transition name="projet">

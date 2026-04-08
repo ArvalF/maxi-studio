@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/projets?populate=couverture_projet')
+import { toKebabCase } from '@/composables/utils'
+const { data } = await useStrapi<{ data: any[] }>('projets-home', 'projets', 'populate=couverture_projet')
 
 // récupère directement le tableau
 const projets = computed(() => {
@@ -11,10 +12,10 @@ const hoveredProjet = ref<Projet | null>(null)
 </script>
 
 <template>
-        <div class="flex min-h-0 h-full items-center justify-center gap-6 flex-wrap">
+        <div class="flex h-full min-h-0 mt-6 items-center justify-start gap-x-18 gap-y-6 flex-wrap overflow-y-auto pr-6">
           <template v-for="projet in projets" :key="projet.id">
             <div v-if="projet.couverture_projet" class="w-60">
-              <a href="">
+              <a :href="`/projets/${toKebabCase(projet.titre)}`">
                 <img  
                 class="h-50 w-70 grayscale-100 hover:grayscale-0"
                 :src="useStrapiBaseUrl() + projet.couverture_projet.url" 

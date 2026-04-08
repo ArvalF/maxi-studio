@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const { data } = await useFetch<{ data: any[] }>(useStrapiBaseUrl() + '/api/presses?populate=logo_magazine&populate=pdf_article&populate=couverture_magazine')
+const { data } = await useStrapi<{ data: any[] }>(
+  'presses-list',
+  'presses',
+  'populate=logo_magazine&populate=pdf_article&populate=couverture_magazine',
+)
 
 // récupère directement le tableau
 const presses = computed(() => {
