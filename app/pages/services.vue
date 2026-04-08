@@ -2,6 +2,7 @@
 const { data } = await useStrapi<{ data: any[] }>('services', 'services', 'populate=photos&populate=service_types')
 const { data: types } = await useStrapi<{ data: any[] }>('services-types', 'service-types')
 
+const mounted = ref(false);
 // récupère directement le tableau
 const services = computed(() => {
   console.log('services', data.value)
@@ -29,8 +30,8 @@ const filteredServices = computed(() => {
     return services.value
   }
   return services.value.filter((service) => {
-    if (!service.types) return false
-    return service.types.some((type: any) => type.name === selectedCategory.value)
+    if (!service.service_types) return false
+    return service.service_types.some((type: any) => type.name === selectedCategory.value)
   })
 })
 
@@ -42,6 +43,7 @@ function selectCategory(categoryName: string) {
 }
 
 onMounted(() => {
+  mounted.value = true;
   if (categories.value.length > 0) {
     selectedCategory.value = categories.value[0].name
   }
@@ -57,46 +59,53 @@ onMounted(() => {
         <div class="w-full min-h-0 overflow-hidden h-full flex flex-col gap-4">
           <div class="w-full">
             <!-- Listes des Catégories -->
-            <div class="flex flex-row gap-4 mb-8 justify-items-start flex-wrap"> 
+             <Transition name="category">
+            <div v-if="mounted" class="flex flex-row gap-4 mb-2 justify-items-start flex-wrap animate-fade-in delay-1000"> 
                 <button
                 v-for="(category, index) in categories"
                 :key="category?.id ?? index"
                 type="button"
-                class="text-base hover:underline"
-                :class="selectedCategory === category.name ? 'underline' : ''"
+                class="text-sm hover:text-black transition duration-300 cursor-pointer"
+                :class="selectedCategory === category.name ? 'text-black' : ' text-gray-300'"
                 @click="selectCategory(category.name)"
               >
                 {{ category.name.toUpperCase() }}
               </button>
             </div>
+            </Transition> 
 
             <!-- Liste des services -->
-            <div class="flex flex-col w-max min-w-full min-h-0 pb-2 space-between overflow-x-auto pr-6">
-              <button
-                v-if="filteredServices.length > 0"
-                v-for="(service, index) in filteredServices"
-                :key="getServiceKey(service, index)"
-                type="button"
-                class="text-base text-left hover:underline"
-                :class="selectedServiceKey === getServiceKey(service, index) ? 'underline' : ''"
-                @click="selectedServiceKey = getServiceKey(service, index)"
-              >
-                {{ service.titre }}
-              </button>
+            <Transition name="projet-list">
+              <div v-if="mounted" class="flex flex-col w-max min-w-full min-h-0 pb-2 space-between overflow-x-auto animate-fade-in delay-3000">
+                <button
+                  v-if="filteredServices.length > 0"
+                  v-for="(service, index) in filteredServices"
+                  :key="getServiceKey(service, index)"
+                  type="button"
+                  class="text-sm text-left  hover:text-black transition duration-300 cursor-pointer"
+                  :class="selectedServiceKey === getServiceKey(service, index) ? 'text-black' : ' text-gray-300'"
+                  @click="selectedServiceKey = getServiceKey(service, index)"
+                >
+                  {{ service.titre.toUpperCase() }}
+                </button>
+              </div>
+            </Transition>
+          </div>
+
+          <Transition name="projet">
+            <!-- Description du projet -->
+            <div v-if="selectedService && mounted" class="flex flex-1 flex-col min-w-full min-h-0 justify-start mt-4 pb-[2rem] font-serif animate-fade-in delay-5000">
+              <!-- <h1 class="text-base italic font-bold">{{ selectedService.titre }}</h1> -->
+              <div v-if="selectedService.location && selectedService.date" class="mb-2"><span class="text-base italic" v-if="selectedService.location">{{ selectedService.location }}</span>, <span v-if="selectedService.date">{{ selectedService.date }}</span></div>
+             <div class="text-justify min-h-0 overflow-x-auto pr-6 scrollbar-thin text-base italic">{{ selectedService.description }}</div>
             </div>
-          </div>
-
-          <!-- Description du service -->
-          <div v-if="selectedService" class="flex flex-1 flex-col min-w-full min-h-0 justify-end pb-[2rem]">
-            <h1 class="font-bold text-xl mb-1">{{ selectedService.titre }}</h1>
-            <div v-if="selectedService.location && selectedService.date" class="mb-6"><span class="italic font-2" v-if="selectedService.location">{{ selectedService.location }}</span>, <span v-if="selectedService.date">{{ selectedService.date }}</span></div>
-           <div class="text-justify min-h-0 overflow-x-auto pr-6 font-serif italic scrollbar-thin">{{ selectedService.description }}</div>
-          </div>
-
-          <!-- Nom du photographe -->
-          <div v-if="selectedService?.photograph" class="flex flex-col min-w-full pb-2 items-start">
-            <div class="text-right italic mr-2"> Photo by {{ selectedService.photograph }}</div>
-          </div>
+          </Transition>
+          <Transition name="projet">
+            <!-- Nom du photographe -->
+            <div v-if="selectedService?.photograph && mounted" class="flex flex-col min-w-full items-start">
+              <div class="text-right text-sm italic mr-2"> Photo by {{ selectedService.photograph }}</div>
+            </div>
+          </Transition>
           <div class="h-1">
           </div>
         </div>
@@ -110,5 +119,34 @@ onMounted(() => {
     </template>
   </MainContentSkeleton>
 </template>
-<style>
+<style scoped>
+.category-enter-active,
+.category-leave-active {
+  transition: opacity 1s ease 0.1s;
+}
+
+.category-enter-from,
+.category-leave-to {
+  opacity: 0;
+}
+
+.projet-list-enter-active,
+.projet-list-leave-active {
+  transition: opacity 1s ease 0.3s;
+}
+
+.projet-list-enter-from,
+.projet-list-leave-to {
+  opacity: 0;
+}
+
+.projet-enter-active,
+.projet-leave-active {
+  transition: opacity 1s ease 0.5s;
+}
+
+.projet-enter-from,
+.projet-leave-to {
+  opacity: 0;
+}
 </style>
