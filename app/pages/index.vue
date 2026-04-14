@@ -1,51 +1,61 @@
 <script setup lang="ts">
 import { toKebabCase } from '@/composables/utils'
-const { data } = await useStrapi<{ data: any[] }>('projets-home', 'projets', 'populate=couverture_projet')
 
-// récupère directement le tableau
-const projets = computed(() => {
-  console.log('projets', data.value)
-  return data.value?.data || []
+const { data: projetsData } = await useStrapi<{ data: any[] }>('projets-home', 'projets', 'populate=couverture_projet')
+
+const { data: pressesData } = await useStrapi<{ data: any[] }>(
+  'presses-list',
+  'presses',
+  'populate=logo_magazine&populate=pdf_article&populate=couverture_magazine',
+)
+
+const { data: servicesData } = await useStrapi<{ data: any[] }>('services', 'services', 'populate=photos&populate=service_types')
+
+const services = computed(() => {
+  console.log('services', servicesData.value)
+  return servicesData.value?.data || []
 })
 
-const hoveredProjet = ref<Projet | null>(null)
+// récupère directement le tableau
+const presses = computed(() => {
+  console.log('presses', pressesData.value)
+  return pressesData.value?.data || []
+})
+
+const projets = computed(() => {
+  console.log('projets', projetsData.value)
+  return projetsData.value?.data || []
+})
+
+const allContent = computed(() => {
+  const projetsContent = projets.value.map(projet => ({
+    id: projet.id,
+    titre: projet.titre,
+    subtitle: projet.location && projet.date ? `${projet.location}, ${projet.date}` : '',
+    imgUrl: projet.couverture_projet?.formats?.thumbnail?.url || '',
+    link: `/projets/${toKebabCase(projet.titre)}`
+  }))
+
+  const pressesContent = presses.value.map(press => ({
+    id: press.id,
+    titre: press.title,
+    subtitle: press.publication,
+    imgUrl: press.logo_magazine?.formats?.thumbnail?.url || '',
+    link: press.printed ? useStrapiBaseUrl() + press.pdf_article.url : press.link
+  }))
+
+  const servicesContent = services.value.map(service => ({
+    id: service.id,
+    titre: service.titre,
+    subtitle: "",
+    imgUrl: service.photos?.[0]?.formats?.thumbnail?.url || '',
+    link: `/services/${toKebabCase(service.titre)}`
+  }))
+
+  return [...projetsContent, ...pressesContent, ...servicesContent]
+})
+
 </script>
-
 <template>
-        <div class="flex h-full min-h-0 mt-6 items-center justify-start gap-x-18 gap-y-6 flex-wrap overflow-y-auto pr-6">
-          <template v-for="projet in projets" :key="projet.id">
-            <div v-if="projet.couverture_projet" class="w-60">
-              <a :href="`/projets/${toKebabCase(projet.titre)}`">
-                <img  
-                class="h-50 w-70 grayscale-100 hover:grayscale-0"
-                :src="useStrapiBaseUrl() + projet.couverture_projet.url" 
-                alt=""
-                @mouseover="hoveredProjet = projet"
-                @mouseleave="hoveredProjet = null">
-                <div
-                  class="font-serif text-sm mt-2 h-15">
-                  <Transition>
-                    <div v-if="hoveredProjet && hoveredProjet.titre === projet.titre">
-                      <p>{{ projet.titre }}</p>
-                      <p>{{  projet.location }}, {{  projet.date }}</p>
-                    </div>
-                </Transition>
-                </div>
-              </a>
-            </div>
-          </template>
-
-        </div>
+      <Gallery :items="allContent" /> 
 </template>
-
-<style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-</style>

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { translate } from '@nuxt/ui/runtime/utils/locale.js';
+import type { StrapiPhoto } from '~/types/main';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import 'vue3-carousel/carousel.css'
 
-const props = defineProps<{ projet: any }>()
+const props = defineProps<{ photos: StrapiPhoto[] }>()
 
 const containerRef = ref<HTMLElement | null>(null)
 const carouselHeight = ref(500)
 const carouselWidth = ref()
 const slideChanged = ref(true)
 const countPhotos = computed(() => {
-  if (props.projet.photos) 
-    return props.projet.photos.length
+  if (props.photos) 
+    return props.photos.length
   return 0
 })
 const paginationGap = '5px'
@@ -62,7 +62,7 @@ onMounted(() => {
           snap-align="center-odd"
           @slide-start="handleSlideStart"
         >
-          <Slide v-for="photo in projet.photos" :key="photo.id">
+          <Slide v-for="photo in photos" :key="photo.id">
             <div class="relative w-full h-full">
               <img 
                 :src="useStrapiBaseUrl() + photo.url" 

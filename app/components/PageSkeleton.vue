@@ -1,6 +1,6 @@
 <template>
       <div class="w-full h-full min-h-0 flex flex-col gap-2 pl-15 pr-15 pt-5 pb-5 2xl:max-w-[90vw] sm:m-auto">
-        <div class="grid grid-rows-[2fr_9fr] min-h-0 gap-2 h-full">
+        <div class="grid grid-rows-[1fr_9fr] min-h-0 gap-2 h-full">
           <!-- Ligne 1 -->
           <slot name="header-content"></slot>
           <!-- Ligne 2 -->

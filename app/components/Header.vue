@@ -33,7 +33,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 
 </script>
 <template>
-    <div class="grid grid-cols-[5fr_2fr] gap-10 items-center">
+    <div class="grid grid-cols-[5fr_2fr] gap-10 items-start">
       <div class="">
         <NuxtLink to="/">
           <div class="font-bold font-mono text-xl">MAXISTUDIO ASSOCIES</div>
