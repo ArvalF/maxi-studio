@@ -114,7 +114,7 @@ onMounted(() => {
     <template #img-content>
       <CustomCarousel
       v-if="selectedService"
-      :projet="selectedService"
+      :carouselItem="selectedService"
     />
     </template>
   </MainContentSkeleton>

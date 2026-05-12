@@ -7,8 +7,8 @@ export function useStrapi<T>(key: string, endpoint: string, params?: string) {
   return useAsyncData<T>(
     key,
     () => $fetch<T>(url.value),
-    {
-      getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key] ?? nuxtApp.static.data[key]
-    }
+    // {
+    //   getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key] ?? nuxtApp.static.data[key]
+    // }
   )
 }

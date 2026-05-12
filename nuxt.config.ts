@@ -15,5 +15,8 @@ export default defineNuxtConfig({
     htmlAttrs: { class: 'h-full' },
     bodyAttrs: { class: 'h-full overflow-hidden' }
   }
-}
+},
+  vite: {
+    logLevel: 'info' // or 'warn', 'error', 'silent'
+  }
 })
