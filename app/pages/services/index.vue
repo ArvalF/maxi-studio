@@ -22,9 +22,9 @@ const selectedService = computed(() => {
 <template>
       <Gallery :items="services.map(service => ({
         id: service.id,
-        titre: service.title,
+        titre: service.titre,
         subtitle: '',
-        imgUrl: service.photos?.[0]?.formats?.thumbnail?.url || '',
+        imgUrl: service.photos?.[0]?.formats?.medium?.url || '',
         link: `/services/${toKebabCase(service.titre)}`
       }))" /> 
 </template>

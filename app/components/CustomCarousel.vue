@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { StrapiPhoto } from '~/types/main';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import 'vue3-carousel/carousel.css'
 
 const props = defineProps<{ photos: StrapiPhoto[] }>()
 

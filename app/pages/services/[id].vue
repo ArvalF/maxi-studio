@@ -54,7 +54,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <ItemPresentation :item="selectedService" />
+    <ItemPresentation v-if="selectedService" :item="selectedService" />
 </template>
 <style scoped>
 .category-enter-active,

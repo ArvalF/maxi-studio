@@ -32,7 +32,7 @@ const allContent = computed(() => {
     id: projet.id,
     titre: projet.titre,
     subtitle: projet.location && projet.date ? `${projet.location}, ${projet.date}` : '',
-    imgUrl: projet.couverture_projet?.formats?.thumbnail?.url || '',
+    imgUrl: projet.couverture_projet?.formats?.medium?.url || '',
     link: `/projets/${toKebabCase(projet.titre)}`
   }))
 
@@ -40,7 +40,7 @@ const allContent = computed(() => {
     id: press.id,
     titre: press.title,
     subtitle: press.publication,
-    imgUrl: press.logo_magazine?.formats?.thumbnail?.url || '',
+    imgUrl: press.logo_magazine?.formats?.medium?.url || '',
     link: press.printed ? useStrapiBaseUrl() + press.pdf_article.url : press.link
   }))
 
@@ -48,7 +48,7 @@ const allContent = computed(() => {
     id: service.id,
     titre: service.titre,
     subtitle: "",
-    imgUrl: service.photos?.[0]?.formats?.thumbnail?.url || '',
+    imgUrl: service.photos?.[0]?.formats?.medium?.url || '',
     link: `/services/${toKebabCase(service.titre)}`
   }))
 
