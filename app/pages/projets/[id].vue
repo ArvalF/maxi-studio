@@ -7,10 +7,7 @@ const { data } = await useStrapi<{ data: any[] }>('projets', 'projets', 'populat
 
 const mounted = ref(false);
 // récupère directement le tableau
-const projets = computed(() => {
-  console.log('projets', data.value)
-  return data.value?.data || []
-})
+const projets = computed(() => data?.value?.data ?? [])
 
 const getProjetId = (projet: Projet) => {
   return toKebabCase(projet.titre);

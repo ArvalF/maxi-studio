@@ -4,16 +4,10 @@ const { data: types } = await useStrapi<{ data: any[] }>('services-types', 'serv
 
 const mounted = ref(false);
 // récupère directement le tableau
-const services = computed(() => {
-  console.log('services', data.value)
-  return data.value?.data || []
-})
+const services = computed(() => data?.value?.data ?? [])
 
 // récupère directement le tableau
-const categories = computed(() => {
-  console.log('categories', types.value)
-  return types.value?.data || []
-})
+const categories = computed(() => types?.value?.data ?? [])
 const selectedServiceKey = ref('')
 const selectedCategory = ref('')
 

@@ -23,13 +23,13 @@ const imageUrl = computed(() => {
 <template>
   <MainContentSkeleton>
     <template #img-content>
-      <div class="h-full min-h-0">
-        <img v-if="imageUrl" :src="imageUrl" alt="" class="h-full w-auto object-cover"/>
+      <div class="h-auto md:h-full min-h-0 pr-10 md:pr-0">
+        <img v-if="imageUrl" :src="imageUrl" alt="" class="block h-auto w-full md:h-full md:w-auto object-cover"/>
       </div>
     </template>
     <template #main-content>
-      <div class="h-full min-h-0 overflow-auto font-serif italic text-justify pr-6">
-      {{ textBody }}
+      <div class="h-auto md:h-full min-h-0 overflow-visible md:overflow-auto text-sm font-serif pr-6 whitespace-pre-line" 
+      v-html="$md(textBody)">
       </div>
     </template>
   </MainContentSkeleton>

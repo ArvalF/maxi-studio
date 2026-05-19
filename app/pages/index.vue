@@ -13,18 +13,18 @@ const { data: servicesData } = await useStrapi<{ data: any[] }>('services', 'ser
 
 const services = computed(() => {
   console.log('services', servicesData.value)
-  return servicesData.value?.data || []
+  return servicesData?.value?.data || []
 })
 
 // récupère directement le tableau
 const presses = computed(() => {
   console.log('presses', pressesData.value)
-  return pressesData.value?.data || []
+  return pressesData?.value?.data || []
 })
 
 const projets = computed(() => {
   console.log('projets', projetsData.value)
-  return projetsData.value?.data || []
+  return projetsData?.value?.data || []
 })
 
 const allContent = computed(() => {

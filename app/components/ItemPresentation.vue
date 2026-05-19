@@ -18,28 +18,50 @@ const props = defineProps<{
   item: PresentationItem
 }>()
 
-
 onMounted(() => {
   mounted.value = true;
 })
 </script>
 
 <template>
-  <MainContentSkeleton>
-    {{ item.photos }}
+  <div class="md:hidden h-full overflow-y-auto pr-4 pb-6 pl-10 pr-10">
+    <div v-if="item && mounted" class="flex flex-col gap-4 font-serif animate-fade-in delay-5000">
+      <div>
+        <h1 class="text-base italic font-bold">{{ item.titre }}</h1>
+        <div v-if="item.location && item.date" class="mb-2 text-base text-bold"><span v-if="item.location">{{ item.location }}</span>, <span v-if="item.date">{{ item.date }}</span></div>
+        <div class="text-sm leading-[1.4em] whitespace-pre-line">{{ item.description }}</div>
+      </div>
+
+      <div
+        v-if="item.photos && item.photos.length > 0"
+        class="flex flex-col gap-4"
+      >
+        <img
+          v-for="photo in item.photos"
+          :key="photo.id"
+          :src="useStrapiBaseUrl() + photo.url"
+          alt="photo"
+          class="w-full h-auto object-cover"
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden md:block h-full">
+    <MainContentSkeleton>
     <template #main-content>
         <div class="w-full min-h-0 overflow-hidden h-full flex flex-col gap-4 justify-between">
           <Transition name="item">
             <!-- Description du projet -->
             <div v-if="item && mounted" class="flex flex-1 flex-col min-w-full min-h-0 justify-start pb-[2rem] font-serif animate-fade-in delay-5000">
               <h1 class="text-base italic font-bold">{{ item.titre }}</h1>
-              <div v-if="item.location && item.date" class="mb-2"><span class="text-base italic" v-if="item.location">{{ item.location }}</span>, <span v-if="item.date">{{ item.date }}</span></div>
-             <div class="text-justify min-h-0 overflow-x-auto pr-6 scrollbar-thin text-base italic">{{ item.description }}</div>
+              <div v-if="item.location && item.date" class="mb-2 text-base text-bold"><span v-if="item.location">{{ item.location }}</span>, <span v-if="item.date">{{ item.date }}</span></div>
+             <div class="justify-left min-h-0 overflow-x-auto pr-6 scrollbar-thin text-sm leading-[1.4em] whitespace-pre-line">{{ item.description }}</div>
             </div>
           </Transition>
           <Transition name="item-photographer">
             <!-- Nom du photographe -->
-            <div v-if="item.photograph && mounted" class="flex flex-col min-w-full items-start">
+            <div v-if="item.photograph && mounted" class="hidden flex-col min-w-full items-start md:flex">
               <div class="text-right text-sm italic mr-2"> Photo by {{ item.photograph }}</div>
             </div>
           </Transition>
@@ -52,11 +74,13 @@ onMounted(() => {
     <Transition name="carousel">
         <CustomCarousel
           v-if="item.photos && item.photos.length > 0"
+          class="hidden md:block"
           :photos="item.photos"
-        />
+        />       
     </Transition>  
     </template>
  </MainContentSkeleton>
+  </div>
 </template>
 <style scoped>
 .item-enter-active,

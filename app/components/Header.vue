@@ -41,15 +41,16 @@ const items = computed<NavigationMenuItem[]>(() => [
 
 </script>
 <template>
-    <div class="relative grid grid-cols-[5fr_2fr] gap-10 items-start">
+    <div class="relative grid grid-cols-[1fr_1fr] gap-1 items-end font-mono pr-20 pl-20 mb-10">
       <div class="">
         <NuxtLink to="/">
-          <div class="font-bold font-mono text-xl">MAXISTUDIO ASSOCIES</div>
+          <div class="font-bold text-xl">MAXISTUDIO</div>
           <!-- <img class="max-h-[4rem]" src="assets/img/maxistudio-logo.jpg"/> -->
         </NuxtLink>
       </div>  
-      <div class="flex items-center justify-end md:block">
-        <nav class="hidden md:flex">
+      <div class="text-xs">
+         <!-- Desktop: menu horizontal (visible uniquement à partir de md) -->
+        <nav class="flex hidden md:flex justify-end">
           <ul class="inline-flex gap-4 flex-wrap  justify-items-stretch">
            <li
              v-for="item in items"
@@ -59,7 +60,7 @@ const items = computed<NavigationMenuItem[]>(() => [
            <NuxtLink
              :to="item.to"
              :class="{ active: item.active }"
-             class="hover:text-black text-gray-300 flex items-center text-base transition duration-300"
+             class="hover:text-black text-gray-300 flex items-center transition duration-300"
            >
              {{ item.label?.toUpperCase() }}
            </NuxtLink>
@@ -69,7 +70,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 
          <!-- Mobile: bouton burger (visible uniquement sous md) -->
          <button
-          class="md:hidden ml-auto"
+          class="md:hidden block w-fit ml-auto"
           type="button"
           :aria-expanded="isMobileMenuOpen"
           aria-label="Ouvrir le menu"
@@ -94,7 +95,7 @@ const items = computed<NavigationMenuItem[]>(() => [
               <NuxtLink
                 :to="item.to"
                 :class="{ active: item.active }"
-                class="hover:text-black text-gray-300 flex items-center justify-center text-center text-base transition duration-300"
+                class="hover:text-black text-gray-300 flex items-center justify-center text-center transition duration-300"
               >
                 {{ item.label?.toUpperCase() }}
               </NuxtLink>

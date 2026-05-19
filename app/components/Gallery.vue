@@ -6,7 +6,7 @@ type Item = {
     titre: string,
     subtitle?: string,
     imgUrl: string,
-    link: string,
+  link?: string,
 }
 
 const props = defineProps<{
@@ -17,25 +17,39 @@ const hoveredItem = ref<Item | null>(null)
 </script>
 
 <template>
-        <div class="flex h-full min-h-0 mt-6 items-center justify-start gap-x-18 gap-y-6 flex-wrap overflow-y-auto pr-6">
+        <div class="flex h-full min-h-0 mt-6 items-start justify-center gap-x-18 gap-y-6 flex-wrap overflow-y-auto pr-10 pl-10 lg:pr-50 lg:pl-50 pb-6">
           <template v-for="item in props.items" :key="item.id">
-            <div v-if="item.imgUrl" class="relative">
-              <div class="h-[200px] w-[300px] overflow-hidden block">
-                <a :href="`${item.link}`" class="w-full h-full block">
+            <div v-if="item.imgUrl" class="relative flex-none basis-[clamp(300px,calc((100%-3*4.5rem)/4),400px)]">
+              <div class="h-125 w-full overflow-hidden block">
+                <a v-if="item.link" :href="`${item.link}`" class="w-full h-full block">
                   <img  
-                  class="object-cover w-full h-full grayscale-100 hover:grayscale-0"
+                  class="object-cover w-full h-full"
                   :src="useStrapiBaseUrl() + item.imgUrl" 
                   alt=""
                   @mouseover="hoveredItem = item"
                   @mouseleave="hoveredItem = null">
                 </a>
+                <div v-else class="w-full h-full block">
+                  <img  
+                  class="object-cover w-full h-full"
+                  :src="useStrapiBaseUrl() + item.imgUrl" 
+                  alt=""
+                  @mouseover="hoveredItem = item"
+                  @mouseleave="hoveredItem = null">
+                </div>
               </div>
               <div
                 class="font-serif text-sm mt-2 h-15">
+                <!-- Mode Mobile -->
+                <div class="md:hidden">
+                  <p>{{ item.titre }}</p>
+                  <p v-if="item.subtitle">{{ item.subtitle }}</p>
+                </div>
+                <!-- Mode Desktop -->
                 <Transition>
-                  <div v-if="hoveredItem && hoveredItem.id === item.id">
+                  <div v-if="hoveredItem && hoveredItem.id === item.id" class="hidden md:block">
                     <p>{{ item.titre }}</p>
-                    <p v-if="item.subtitle">{{  item.subtitle}}</p>
+                    <p v-if="item.subtitle">{{ item.subtitle }}</p>
                   </div>
               </Transition>
               </div>

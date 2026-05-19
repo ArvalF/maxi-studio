@@ -6,7 +6,7 @@
     <template #img-content>
     </template>
     <template #main-content>
-      <div class="italic flex flex-1 h-full flex-col gap-4 justify-between">
+      <div class="italic flex flex-1 h-full flex-col gap-4 justify-between pr-10 md:pr-0">
         <div class="flex flex-col gap-4 justify-between">
           <h4>MAXISTUDIO ASSOCIES</h4>
 

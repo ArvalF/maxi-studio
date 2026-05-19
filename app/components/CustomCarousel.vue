@@ -31,6 +31,7 @@ function handleSlideStart() {
 }
 const objectPosition = computed(() => {
   slideChanged.value;
+  return 'right-0'
   return 'left-0'
   // return Math.random() < 2/3 ? 'left-0' : 'right-0'
 })
