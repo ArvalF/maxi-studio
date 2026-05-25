@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useProjectSchema } from '~/composables/seo/useProjectSchema';
+
 const { data } = await useStrapi<{ data: any[] }>('services', 'services', 'populate=photos&populate=service_types')
 const { data: types } = await useStrapi<{ data: any[] }>('services-types', 'service-types')
 
@@ -35,6 +37,9 @@ function selectCategory(categoryName: string) {
     selectedServiceKey.value = getServiceKey(filteredServices.value[0], 0)
   }
 }
+
+// Initialiser le schéma SEO au niveau de la page
+useProjectSchema(() => selectedService.value)
 
 onMounted(() => {
   mounted.value = true;

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { toKebabCase } from '~/composables/utils';
+import { useProjectSchema } from '~/composables/seo/useProjectSchema';
 import type { PresentationItem } from '~/types';
 
 const route = useRoute()
@@ -17,6 +18,9 @@ const getProjetId = (projet: PresentationItem) => {
 const selectedProjet = computed(() => {
   return projets.value.find((projet) => getProjetId(projet) === route.params.id)
 })
+
+// Initialiser le schéma SEO au niveau de la page
+useProjectSchema(() => selectedProjet.value)
 
 
 onMounted(() => {

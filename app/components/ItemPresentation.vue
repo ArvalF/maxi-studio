@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import type { PresentationItem } from '~/types';
-import { useProjectSchema } from '~/composables/seo/useProjectSchema';
 
 const mounted = ref(false);
 
 const props = defineProps<{
   item: PresentationItem
 }>()
-
-useProjectSchema(() => props.item)
 
 onMounted(() => {
   mounted.value = true;
