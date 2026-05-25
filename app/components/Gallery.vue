@@ -17,7 +17,8 @@ const hoveredItem = ref<Item | null>(null)
 </script>
 
 <template>
-        <div class="flex h-full min-h-0 mt-6 items-start justify-center gap-x-18 gap-y-6 flex-wrap overflow-y-auto pr-10 pl-10 lg:pr-50 lg:pl-50 pb-6">
+  <div class="min-h-full flex flex-col">
+        <div class="flex min-h-0 items-start justify-center gap-x-18 gap-y-6 flex-wrap pr-10 pl-10 lg:pr-50 lg:pl-50">
           <template v-for="item in props.items" :key="item.id">
             <div v-if="item.imgUrl" class="relative flex-none basis-[clamp(300px,calc((100%-3*4.5rem)/4),400px)]">
               <div class="h-125 w-full overflow-hidden block">
@@ -55,8 +56,13 @@ const hoveredItem = ref<Item | null>(null)
               </div>
             </div>
           </template>
-
         </div>
+      
+      <div class="mt-auto">
+        <Footer :show-footer="true"></Footer>
+      </div>
+  </div>      
+  
 </template>
 
 <style scoped>
