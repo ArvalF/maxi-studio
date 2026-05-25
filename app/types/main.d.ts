@@ -1,5 +1,11 @@
-export type StrapiPhoto = {
-  id: number;
-  url: string;
-  [key: string]: any; // Ajoutez cette ligne pour permettre d'autres propriétés
-}
+export type {
+  GalleryItem,
+  PresentationItem,
+  ProjectSchemaItem,
+  Projet,
+  ProjetApi,
+  StrapiCollectionResponse,
+  StrapiPhoto,
+  StrapiV4Media,
+  StrapiV5Media,
+} from './index'

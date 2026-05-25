@@ -3,7 +3,19 @@ export default defineNuxtConfig({
   ssr: process.env.NODE_ENV === 'production',
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxt/ui'],
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.maxistudio.fr'
+  },
+  modules: [
+    '@nuxt/ui',
+    ['@nuxtjs/sitemap', {
+      autoLastmod: true,
+    }],
+    ['@nuxtjs/robots', {
+      sitemap: 'https://www.maxistudio.fr/sitemap.xml',
+    }],
+    'nuxt-schema-org'
+  ],
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
@@ -13,6 +25,13 @@ export default defineNuxtConfig({
   app: {
   rootAttrs: { class: 'h-full' },
   head: {
+    titleTemplate: 'Maxistudio',
+    meta: [
+        {
+          name: 'description',
+          content: 'Maxistudio est un cabinet d\'architecture basé entre Paris et Marseille.'
+        }
+      ],
     htmlAttrs: { class: 'h-full' },
     bodyAttrs: { class: 'h-full overflow-hidden' }
   }

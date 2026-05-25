@@ -1,19 +1,12 @@
 <script setup lang="ts">
 import { toKebabCase } from '@/composables/utils'
-
-type Item = {
-    id: string,
-    titre: string,
-    subtitle?: string,
-    imgUrl: string,
-  link?: string,
-}
+import type { GalleryItem } from '~/types'
 
 const props = defineProps<{
-  items: Item[]
+  items: GalleryItem[]
 }>()
 
-const hoveredItem = ref<Item | null>(null)
+const hoveredItem = ref<GalleryItem | null>(null)
 </script>
 
 <template>

@@ -1,36 +1,11 @@
-export interface Projet {
-  id: number | string
-  titre: string
-  description: string
-  photos: string[],
-  location?: string,
-  date: string
-}
-
-interface StrapiV4Media {
-  id: number | string
-  attributes?: {
-    url?: string
-  }
-}
-
-interface StrapiV5Media {
-  id: number | string
-  url?: string
-}
-
-export interface ProjetApi {
-  id: number | string
-  titre: string
-  description: string
-  photos?:
-    | string[]
-    | Array<string | StrapiV4Media | StrapiV5Media>
-    | {
-        data?: Array<StrapiV4Media | StrapiV5Media>
-      }
-}
-
-export interface StrapiCollectionResponse<T> {
-  data: T[]
-}
+export type {
+  GalleryItem,
+  PresentationItem,
+  ProjectSchemaItem,
+  Projet,
+  ProjetApi,
+  StrapiCollectionResponse,
+  StrapiPhoto,
+  StrapiV4Media,
+  StrapiV5Media,
+} from '~/types'

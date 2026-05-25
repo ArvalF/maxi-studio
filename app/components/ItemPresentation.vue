@@ -1,22 +1,14 @@
 <script setup lang="ts">
-import type { StrapiPhoto } from '~/types/main';
+import type { PresentationItem } from '~/types';
+import { useProjectSchema } from '~/composables/seo/useProjectSchema';
+
 const mounted = ref(false);
 
-
-
-type PresentationItem = {
-  id: number;
-  titre: string;
-  description: string;
-  photograph?: string;
-  date?: string;
-  location?: string;
-  type: string;
-  photos?: StrapiPhoto[];
-}
 const props = defineProps<{
   item: PresentationItem
 }>()
+
+useProjectSchema(() => props.item)
 
 onMounted(() => {
   mounted.value = true;
