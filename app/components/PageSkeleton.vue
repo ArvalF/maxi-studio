@@ -12,10 +12,12 @@ const showFooter = computed(() => /^\/(?:projets|services)\/[^/]+$/.test(route.p
           <!-- <div class="grid grid-cols-[5fr_2fr] gap-10 min-h-0 h-full overflow-hidden">
             <slot name="main-content"></slot>
           </div> -->
-          <div class="min-h-0 h-full overflow-y-auto w-full">
+          <div class="min-h-0 h-full overflow-y-auto w-full pl-5 pr-5">
             <slot name="main-content"></slot>
           </div>
         </div>
-        <Footer :show-footer="showFooter"></Footer>
+        <div class="hidden md:block">
+          <Footer :show-footer="showFooter"></Footer>
+        </div>
       </div>
 </template>

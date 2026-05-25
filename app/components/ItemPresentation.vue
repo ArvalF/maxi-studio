@@ -24,7 +24,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="md:hidden h-full overflow-y-auto pr-4 pb-6 pl-10 pr-10">
+  <div class="md:hidden h-full md:overflow-y-auto pb-6">
     <div v-if="item && mounted" class="flex flex-col gap-4 font-serif animate-fade-in delay-5000">
       <div>
         <h1 class="text-base italic font-bold">{{ item.titre }}</h1>
@@ -43,6 +43,9 @@ onMounted(() => {
           alt="photo"
           class="w-full h-auto object-cover"
         >
+      </div>
+      <div>
+        <Footer :show-footer="true"></Footer>
       </div>
     </div>
   </div>
@@ -79,7 +82,7 @@ onMounted(() => {
         />       
     </Transition>  
     </template>
- </MainContentSkeleton>
+  </MainContentSkeleton>
   </div>
 </template>
 <style scoped>
