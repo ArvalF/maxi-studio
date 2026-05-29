@@ -12,7 +12,7 @@ export default defineNuxtConfig({
       autoLastmod: true,
     }],
     ['@nuxtjs/robots', {
-      sitemap: 'https://www.maxistudio.fr/sitemap.xml',
+      sitemap: 'https://maxistudio.fr/sitemap.xml',
     }],
     'nuxt-schema-org'
   ],
@@ -26,10 +26,13 @@ export default defineNuxtConfig({
   rootAttrs: { class: 'h-full' },
   head: {
     titleTemplate: 'Maxistudio',
+    link: [
+      { rel: 'icon', type: 'image/jpeg', href: '/favicon.jpeg' }
+    ],
     meta: [
         {
           name: 'description',
-          content: 'Maxistudio est un cabinet d\'architecture basé entre Paris et Marseille.'
+          content: 'Maxistudio, cabinet d\'architecture entre Paris et Marseille.'
         }
       ],
     htmlAttrs: { class: 'h-full' },
