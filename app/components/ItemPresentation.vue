@@ -33,9 +33,6 @@ onMounted(() => {
           class="w-full h-auto object-cover"
         >
       </div>
-      <div>
-        <Footer :show-footer="true"></Footer>
-      </div>
     </div>
   </div>
 

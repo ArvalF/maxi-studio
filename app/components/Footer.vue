@@ -3,8 +3,8 @@ const props = defineProps<{ showFooter?: boolean }>()
 </script>  
 <template>
     <!-- FOOTER -->
-        <footer v-if="showFooter" class="h-20 max-h-20 text-[0.65rem] leading-2  hidden md:block">
-          <div class="flex  flex-row  gap-12 pl-20">
+        <footer v-if="showFooter" class="h-20 max-h-20 text-[0.65rem] leading-2  hidden md:flex items-center">
+          <div class="flex  flex-row  gap-12 pl-25 items-start">
             <div class="flex flex-col gap-1 font-bold"">
               <p>Maxistudio associés</p>
             </div>

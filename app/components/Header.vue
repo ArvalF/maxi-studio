@@ -41,17 +41,18 @@ const items = computed<NavigationMenuItem[]>(() => [
 
 </script>
 <template>
-    <div class="relative grid grid-cols-[1fr_1fr] gap-1 items-end font-mono pr-5 pl-5 md:pr-20 md:pl-20 mb-10">
+    <div class="relative flex gap-15 items-end font-mono pr-5 pl-5 md:pr-25 md:pl-25 mb-10">
+    <!-- <div class="relative grid grid-cols-[1fr_1fr] gap-1 items-end font-mono pr-5 pl-5 md:pr-25 md:pl-25 mb-10"> -->
       <div class="">
         <NuxtLink to="/">
-          <div class="font-bold text-xl">MAXISTUDIO</div>
-          <!-- <img class="max-h-[4rem]" src="assets/img/maxistudio-logo.jpg"/> -->
+          <!-- <div class="font-bold text-xl">MAXISTUDIO</div> -->
+          <img class="max-h-3" src="~/assets/img/logo-maxistudio-horizontal.png"/>
         </NuxtLink>
       </div>  
       <div class="text-xs">
          <!-- Desktop: menu horizontal (visible uniquement à partir de md) -->
         <nav class="hidden md:flex justify-end">
-          <ul class="inline-flex gap-4 flex-wrap  justify-items-stretch">
+          <ul class="inline-flex gap-4">
            <li
              v-for="item in items"
              :key="String(item.to ?? item.label)"
@@ -60,9 +61,9 @@ const items = computed<NavigationMenuItem[]>(() => [
            <NuxtLink
              :to="item.to"
              :class="{ active: item.active }"
-             class="hover:text-black text-gray-300 flex items-center transition duration-300"
+             class="hover:text-black text-gray-300 flex items-end leading-none transition duration-300"
            >
-             {{ item.label?.toUpperCase() }}
+             <span style="transform: translateY(3px);">{{ item.label?.toUpperCase() }}</span>
            </NuxtLink>
            </li>
           </ul>

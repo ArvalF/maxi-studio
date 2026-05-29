@@ -1,4 +1,6 @@
 <template>
+      <LandingAnimation />
+
     <UApp class="h-full w-full">
         <PageSkeleton>
           <template #header-content>

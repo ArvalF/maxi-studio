@@ -57,5 +57,5 @@ const allContent = computed(() => {
 
 </script>
 <template>
-      <Gallery :items="allContent" /> 
+  <Gallery :items="allContent" />
 </template>
