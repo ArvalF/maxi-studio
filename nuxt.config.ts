@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   site: {
-    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.maxistudio.fr'
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://maxistudio.fr'
   },
   modules: [
     '@nuxt/ui',
