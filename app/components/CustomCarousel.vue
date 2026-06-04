@@ -60,6 +60,7 @@ onMounted(() => {
           :pause-autoplay-on-hover="true"
           slide-effect="fade"
           snap-align="center-odd"
+          breakpoint-mode="carousel"
           @slide-start="handleSlideStart"
         >
           <Slide v-for="photo in photos" :key="photo.id">
@@ -67,7 +68,7 @@ onMounted(() => {
               <img 
                 :src="useStrapiBaseUrl() + photo.url" 
                 alt="photo" 
-                class="absolute h-full"
+                class="absolute object-cover w-auto h-full"
                 :class="objectPosition"
               />
             </div>

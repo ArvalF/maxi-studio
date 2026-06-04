@@ -24,7 +24,7 @@ const imageUrl = computed(() => {
   <MainContentSkeleton>
     <template #img-content>
       <div class="h-auto md:h-full min-h-0 pr-10 md:pr-0">
-        <img v-if="imageUrl" :src="imageUrl" alt="" class="block h-auto w-full md:h-full md:w-auto object-cover"/>
+        <img v-if="imageUrl" :src="imageUrl" alt="" class="block h-auto w-auto md:h-[700px] md:w-auto object-cover"/>
       </div>
     </template>
     <template #main-content>

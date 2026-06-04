@@ -14,14 +14,24 @@ const presses = computed(() => {
 })
 </script>
 <template>
-      <Gallery :items="presses.map(press => ({
+      <!-- <Gallery :items="presses.map(press => ({
         id: press.id,
         titre: press.title,
         subtitle: press.publication,
         imgUrl: press.logo_magazine?.url || '',
         link: press.printed ? press.pdf_article.url : press.link
 
-      }))" /> 
+      }))" />  -->
+    <div class="flex flex-col items-center justify-center ">
+      <PressElement
+        v-for="press in presses"
+        :key="press.id"
+        :titre="press.title"
+        :description="press.description"
+        :lien="press.printed ? useStrapiBaseUrl() + press.pdf_article.url : press.link"
+        :imageUrl="useStrapiBaseUrl() + press.logo_magazine.url"
+      />
+    </div>
 </template>
   <!-- <template>
     <MainContentSkeleton>
