@@ -36,7 +36,9 @@ const scrollable = computed(() => !(/^\/(?:projets|services)\/[^/]+$/.test(route
               <slot name="main-content"></slot>
           </div>
           <!-- Ligne 3 -->
-          <Footer :show-footer="showFooter"></Footer>
+          <div class="w-full pl-5 pr-5">
+            <Footer :show-footer="showFooter"></Footer>
+          </div>
         </div>
       </div>
 </template>

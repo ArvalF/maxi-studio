@@ -5,7 +5,12 @@ const { data } = await useStrapi<{ data: any[] }>('projets-home', 'projets', 'po
 
 const projets = computed(() => {
   console.log('projets', data.value)
-  return data.value?.data || []
+  let items = data.value?.data || []
+  // Trier les projets par date décroissante
+  let ret =  items.sort(
+  (a, b) => new Date(b.date_d_affichage) - new Date(a.date_d_affichage)
+  );
+  return ret
 })
 </script>
 <template>

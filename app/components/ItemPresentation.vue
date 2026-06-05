@@ -42,29 +42,31 @@ onMounted(() => {
         <div class="w-full min-h-0 overflow-hidden h-full flex flex-col gap-4 justify-between">
           <Transition name="item">
             <!-- Description du projet -->
-            <div v-if="item && mounted" class="flex flex-1 flex-col min-w-full min-h-0 justify-start pb-[2rem] font-serif animate-fade-in delay-5000">
-              <h1 class="text-base italic font-bold">{{ item.titre }}</h1>
-              <div v-if="item.location && item.date" class="mb-2 text-base text-bold"><span v-if="item.location">{{ item.location }}</span>, <span v-if="item.date">{{ item.date }}</span></div>
+            <div v-if="item && mounted" class="flex flex-1 flex-col min-w-full min-h-0 justify-start pb-[2rem]  animate-fade-in delay-5000">
+              <h1 class="font-serif text-base font-bold">{{ item.titre }}</h1>
+              <div v-if="item.location" class="text-xs text-base text-bold"><span v-if="item.location">{{ item.location }}</span></div>
+              <div class="text-xs mb-4 text-base text-bold ml-12"><span v-if="item.date">{{ item.date }}</span></div>
              <div class="justify-left min-h-0 overflow-x-auto pr-6 scrollbar-thin text-sm leading-[1.4em] whitespace-pre-line">{{ item.description }}</div>
             </div>
           </Transition>
           <Transition name="item-photographer">
             <!-- Nom du photographe -->
-            <div v-if="item.photograph && mounted" class="hidden flex-col min-w-full items-start md:flex">
-              <div class="text-right text-sm italic mr-2"> Photo by {{ item.photograph }}</div>
+            <div v-if="item.photograph && mounted" class="hidden flex-col min-w-full items-end md:flex">
+              <p class="text-sm mr-2"> Photo by {{ item.photograph }}</p>
             </div>
           </Transition>
-          <div class="h-1">
-          </div>
+          <!-- <div class="h-1">
+          </div> -->
         </div>
     </template> 
 
-    <template #img-content>
+    <template #img-content="{ mainColumnWidth }">
     <Transition name="carousel">
         <CustomCarousel
           v-if="item.photos && item.photos.length > 0"
           class="hidden md:block"
           :photos="item.photos"
+          :pagination-padding-right="mainColumnWidth"
         />       
     </Transition>  
     </template>

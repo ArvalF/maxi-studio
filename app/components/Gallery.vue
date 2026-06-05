@@ -15,7 +15,7 @@ const hoveredItem = ref<GalleryItem | null>(null)
           <template v-for="item in props.items" :key="item.id">
             <div v-if="item.imgUrl" class="relative w-full flex-none basis-full md:basis-[clamp(300px,calc((100%-3*4.5rem)/4),400px)]">
               <div class="md:h-125  overflow-hidden block">
-                <NuxtLink v-if="item.link" :to="item.link" class="w-full h-full block">
+                <NuxtLink v-if="item.link" :to="item.link" :target="item.type === 'presse' ? '_blank' : undefined" class="w-full h-full block">
                   <img  
                   class="object-cover w-full h-full"
                   :src="useStrapiBaseUrl() + item.imgUrl" 

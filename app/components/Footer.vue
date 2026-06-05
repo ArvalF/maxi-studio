@@ -8,7 +8,7 @@ const props = defineProps<{ showFooter?: boolean }>()
             <div class="flex flex-col gap-1 font-bold"">
               <p>Maxistudio associés</p>
             </div>
-            <div class="flex flex-col gap-1">
+            <div class="flex flex-col gap-1 ml-9">
               <p>1a rue Rodolphe Pollak</p>
               <p>13001 Marseille</p>
               <p class="italic">+33 7 68 77 69 59</p>
@@ -26,6 +26,12 @@ const props = defineProps<{ showFooter?: boolean }>()
                 <a href="https://www.instagram.com/_maxistudio/" 
                   class="underline" target="_blank">
                   instagram
+                </a>
+              </div>
+              <div class="w-fit bg-transparent"> 
+                <a href="https://www.linkedin.com/company/maxistudio-associ%C3%A9s/" 
+                  class="underline" target="_blank">
+                  linkedin
                 </a>
               </div>
             </div>
@@ -57,6 +63,12 @@ const props = defineProps<{ showFooter?: boolean }>()
                 <a href="https://www.instagram.com/_maxistudio/" 
                   class="underline" target="_blank">
                   instagram
+                </a>
+              </div>
+              <div class="w-fit bg-transparent"> 
+                <a href="https://www.linkedin.com/company/maxistudio-associ%C3%A9s/" 
+                  class="underline" target="_blank">
+                  linkedin
                 </a>
               </div>
             </div>

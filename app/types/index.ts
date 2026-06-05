@@ -23,6 +23,7 @@ export type GalleryItem = {
   subtitle?: string
   imgUrl: string
   link?: string
+  type?: string
 }
 
 export interface Projet {

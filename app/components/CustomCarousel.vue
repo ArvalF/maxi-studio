@@ -1,30 +1,32 @@
 <script setup lang="ts">
 import type { StrapiPhoto } from '~/types';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+import { main } from '#build/ui';
 
-const props = defineProps<{ photos: StrapiPhoto[] }>()
+const props = withDefaults(defineProps<{
+  photos: StrapiPhoto[]
+  paginationPaddingRight?: number | string
+}>(), {
+  paginationPaddingRight: 0,
+})
 
 const containerRef = ref<HTMLElement | null>(null)
 const carouselHeight = ref(500)
 const carouselWidth = ref()
 const slideChanged = ref(true)
-const countPhotos = computed(() => {
-  if (props.photos) 
-    return props.photos.length
-  return 0
-})
 const paginationGap = '5px'
-const mainContentGap= '40px'
 const paginationButtonSize = '10px'
-const paginationLength = computed(() => {
-  return (countPhotos.value - 2) * parseInt(paginationGap) + countPhotos.value * parseInt(paginationButtonSize)
+const paginationPaddingRightValue = computed(() => {
+  if (typeof props.paginationPaddingRight === 'number')
+    return `${props.paginationPaddingRight}px`
+
+  return props.paginationPaddingRight
 })
 const Xtranslate = computed(() => {
-  return paginationLength.value/2 
-          // + parseInt(paginationGap) 
-          + parseInt(paginationButtonSize)/2 
-          + parseInt(mainContentGap) 
-          + 'px'
+   return   - parseInt(paginationPaddingRightValue.value) 
+            + parseInt(paginationButtonSize) 
+
+            + 'px'
 })
 function handleSlideStart() {
   slideChanged.value = !slideChanged.value 
@@ -91,10 +93,13 @@ onMounted(() => {
   overflow: hidden;
 }
 .carousel__pagination {
-  position: relative;
+  display: none;
   gap: v-bind(paginationGap);
-  bottom: 1rem; 
-  left: calc(100% + v-bind(Xtranslate));
+  bottom: 1px;
+  position: absolute;
+  justify-content: left;
+  left: 0;
+  /* left: v-bind(Xtranslate); */
 }
 .carousel__pagination-button {
   height: v-bind(paginationButtonSize);

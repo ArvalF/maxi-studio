@@ -9,12 +9,12 @@ const { data: pressesData } = await useStrapi<{ data: any[] }>(
   'populate=logo_magazine&populate=pdf_article&populate=couverture_magazine',
 )
 
-const { data: servicesData } = await useStrapi<{ data: any[] }>('services', 'services', 'populate=photos&populate=service_types')
+// const { data: servicesData } = await useStrapi<{ data: any[] }>('services', 'services', 'populate=photos&populate=service_types')
 
-const services = computed(() => {
-  console.log('services', servicesData.value)
-  return servicesData?.value?.data || []
-})
+// const services = computed(() => {
+//   console.log('services', servicesData.value)
+//   return servicesData?.value?.data || []
+// })
 
 // récupère directement le tableau
 const presses = computed(() => {
@@ -33,26 +33,32 @@ const allContent = computed(() => {
     titre: projet.titre,
     subtitle: projet.location && projet.date ? `${projet.location}, ${projet.date}` : '',
     imgUrl: projet.couverture_projet?.formats?.medium?.url || '',
-    link: `/projets/${toKebabCase(projet.titre)}`
+    link: `/projets/${toKebabCase(projet.titre)}`,
+    date_d_affichage: projet.date_d_affichage,
+    type: 'projet'
   }))
 
   const pressesContent = presses.value.map(press => ({
     id: press.id,
     titre: press.title,
     subtitle: press.publication,
-    imgUrl: press.logo_magazine?.formats?.medium?.url || '',
-    link: press.printed ? useStrapiBaseUrl() + press.pdf_article.url : press.link
+    imgUrl: press.couverture_magazine?.formats?.medium?.url || '',
+    link: press.printed ? useStrapiBaseUrl() + press.pdf_article.url : press.link,
+    date_d_affichage: press.date_d_affichage,
+    type: 'presse'
   }))
 
-  const servicesContent = services.value.map(service => ({
-    id: service.id,
-    titre: service.titre,
-    subtitle: "",
-    imgUrl: service.photos?.[0]?.formats?.medium?.url || '',
-    link: `/services/${toKebabCase(service.titre)}`
-  }))
+  // const servicesContent = services.value.map(service => ({
+  //   id: service.id,
+  //   titre: service.titre,
+  //   subtitle: "",
+  //   imgUrl: service.photos?.[0]?.formats?.medium?.url || '',
+  //   link: `/services/${toKebabCase(service.titre)}`
+  // }))
 
-  return [...projetsContent, ...pressesContent, ...servicesContent]
+  return [...projetsContent, ...pressesContent].sort(
+  (a, b) => new Date(b.date_d_affichage) - new Date(a.date_d_affichage)
+  ); // , ...servicesContent]
 })
 
 </script>
