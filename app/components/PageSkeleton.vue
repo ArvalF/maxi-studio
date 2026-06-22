@@ -5,8 +5,19 @@ const route = useRoute()
 const breakpoints = useBreakpoints({ md: '768px' })
 const isMobile = computed(() => breakpoints.smaller('md').value)
 const showFooter = true
-const scrollable = computed(() => !(/^\/(?:projets|services)\/[^/]+$/.test(route.path) 
-                                  || route.path === '/about' || route.path === '/a-propos'))
+
+const isServicePage = computed(() => /^\/services(?:\/[^/]+)?$/.test(route.path))
+
+const scrollable = computed(() => {
+  if (isServicePage.value) return true
+
+  return !(
+    /^\/(?:projets)\/[^/]+$/.test(route.path)
+    || route.path === '/about'
+    || route.path === '/a-propos'
+    || route.path === '/press'
+  )
+})
 
 </script>
 

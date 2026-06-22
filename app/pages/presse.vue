@@ -14,6 +14,7 @@ const presses = computed(() => {
 })
 </script>
 <template>
+    <div class="min-h-0 max-h-[100%] h-auto overflow-visible md:h-full md:overflow-hidden md:pl-71  xl:pr-30 2xl:pr-50">
       <!-- <Gallery :items="presses.map(press => ({
         id: press.id,
         titre: press.title,
@@ -22,7 +23,7 @@ const presses = computed(() => {
         link: press.printed ? press.pdf_article.url : press.link
 
       }))" />  -->
-    <div class="flex flex-col items-center justify-center ">
+    <div class="flex flex-col items-start justify-start ">
       <PressElement
         v-for="press in presses"
         :key="press.id"
@@ -31,6 +32,7 @@ const presses = computed(() => {
         :lien="press.printed ? useStrapiBaseUrl() + press.pdf_article.url : press.link"
         :imageUrl="useStrapiBaseUrl() + press.logo_magazine.url"
       />
+    </div>
     </div>
 </template>
   <!-- <template>

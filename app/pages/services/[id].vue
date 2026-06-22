@@ -1,88 +1,55 @@
 <script setup lang="ts">
-import { useProjectSchema } from '~/composables/seo/useProjectSchema';
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import ServiceScrollableBeforeAfter from '~/components/services/ServiceScrollableBeforeAfter.vue'
+import ServiceScrollableCarousel from '~/components/services/ServiceScrollableCarousel.vue'
+import ServiceScrollableMedia from '~/components/services/ServiceScrollableMedia.vue'
+import ServiceScrollableRichText from '~/components/services/ServiceScrollableRichText.vue'
+import type {
+  Service,
+  ServiceScrollableBlock,
+  StrapiCollectionResponse,
+} from '~/types'
 
-const { data } = await useStrapi<{ data: any[] }>('services', 'services', 'populate=photos&populate=service_types')
-const { data: types } = await useStrapi<{ data: any[] }>('services-types', 'service-types')
+const route = useRoute()
+const strapiBaseUrl = useStrapiBaseUrl()
 
-const mounted = ref(false);
-// récupère directement le tableau
-const services = computed(() => data?.value?.data ?? [])
+const { data } = await useFetch<StrapiCollectionResponse<Service>>(
+  strapiBaseUrl + `/api/services?filters[url][$eq]=${route.params.id}&populate[scrollable][populate]=*`
+)
 
-// récupère directement le tableau
-const categories = computed(() => types?.value?.data ?? [])
-const selectedServiceKey = ref('')
-const selectedCategory = ref('')
+const pageData = computed<Service | null>(() => {
+  return data.value?.data?.[0] || null
+})
 
-const getServiceKey = (service: any, index: number) => {
-  return String(service?.id ?? service?.documentId ?? index)
+const scrollable = computed<ServiceScrollableBlock[]>(() => {
+  return pageData.value?.scrollable || []
+})
+
+const scrollableComponentMap = {
+  'shared.rich-text': ServiceScrollableRichText,
+  'shared.media': ServiceScrollableMedia,
+  'my-components.before-after-visualizer': ServiceScrollableBeforeAfter,
+  'shared.slider': ServiceScrollableCarousel,
+} as const
+
+const getScrollableComponent = (componentType: ServiceScrollableBlock['__component']) => {
+  return scrollableComponentMap[componentType]
 }
-
-const selectedService = computed(() => {
-  return services.value.find((service, index) => getServiceKey(service, index) === selectedServiceKey.value)
-})
-
-const filteredServices = computed(() => {
-  if (!selectedCategory.value) {
-    return services.value
-  }
-  return services.value.filter((service) => {
-    if (!service.service_types) return false
-    return service.service_types.some((type: any) => type.name === selectedCategory.value)
-  })
-})
-
-function selectCategory(categoryName: string) {
-  selectedCategory.value = categoryName
-  if (filteredServices.value.length > 0) {
-    selectedServiceKey.value = getServiceKey(filteredServices.value[0], 0)
-  }
-}
-
-// Initialiser le schéma SEO au niveau de la page
-useProjectSchema(() => selectedService.value)
-
-onMounted(() => {
-  mounted.value = true;
-  if (categories.value.length > 0) {
-    selectedCategory.value = categories.value[0].name
-  }
-  if (filteredServices.value.length > 0) {
-    selectedServiceKey.value = getServiceKey(filteredServices.value[0], 0)
-  }
-})
 </script>
 
 <template>
-    <ItemPresentation v-if="selectedService" :item="selectedService" />
+    <div class="min-h-0 max-h-[100%] h-auto overflow-visible md:h-full md:overflow-hidden md:pl-71 xl:pr-30 2xl:pr-50">
+        <h1 class="mb-6 text-xs">{{ pageData?.titre }}</h1>
+        <div class="max-w-[500px]">
+            <component
+              :is="getScrollableComponent(block.__component)"
+              v-for="block in scrollable"
+              :key="block.id"
+              :block="block"
+              :base-url="strapiBaseUrl"
+              class="mb-6 last:mb-0"
+            />
+        </div>
+    </div>
 </template>
-<style scoped>
-.category-enter-active,
-.category-leave-active {
-  transition: opacity 1s ease 0.1s;
-}
-
-.category-enter-from,
-.category-leave-to {
-  opacity: 0;
-}
-
-.projet-list-enter-active,
-.projet-list-leave-active {
-  transition: opacity 1s ease 0.3s;
-}
-
-.projet-list-enter-from,
-.projet-list-leave-to {
-  opacity: 0;
-}
-
-.projet-enter-active,
-.projet-leave-active {
-  transition: opacity 1s ease 0.5s;
-}
-
-.projet-enter-from,
-.projet-leave-to {
-  opacity: 0;
-}
-</style>

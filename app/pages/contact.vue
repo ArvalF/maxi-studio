@@ -7,7 +7,7 @@
     </template>
     <template #main-content> -->
     <div class="min-h-0 max-h-[100%] h-auto overflow-visible md:h-full md:overflow-hidden md:pl-71  xl:pr-30 2xl:pr-50">
-      <div class="text-sm flex flex-1 h-full flex-col gap-8 min-h-[80dvh] justify-center pr-10 md:pr-0">
+      <div class="text-sm flex flex-1 h-full flex-col gap-8 min-h-[80dvh] justify-start pr-10 md:pr-0">
         <div class="flex flex-col gap-4 justify-between">
           <div>
           <h4 class="font-bold">Maxistudio Associés</h4>
