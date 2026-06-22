@@ -76,9 +76,9 @@ onBeforeUnmount(() => {
 
           <ul
             v-if="hasChildren(item)"
-            class="fixed top-14 left-0 flex w-screen gap-4 z-20 items-center bg-(--bg-color) pt-2.5 opacity-0"
+            class="fixed left-0 flex w-screen gap-4 z-20 items-center bg-(--bg-color) pt-2.5 opacity-0"
             :class="openedItem === getItemKey(item) ? 'visible opacity-100 pointer-events-auto transition-opacity duration-300' : 'invisible pointer-events-none transition-opacity duration-300'"
-            :style="{ paddingLeft: `${navItemPositions[getItemKey(item)]}px` }"
+            :style="{ paddingLeft: `${navItemPositions[getItemKey(item)]}px`, transform: 'translateY(3px)' }"
           >
             <li
               v-for="(child, index) in getChildren(item)"
