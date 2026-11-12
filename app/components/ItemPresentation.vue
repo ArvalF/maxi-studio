@@ -62,12 +62,14 @@ onMounted(() => {
 
     <template #img-content="{ mainColumnWidth }">
     <Transition name="carousel">
+      <ClientOnly>
         <CustomCarousel
           v-if="item.photos && item.photos.length > 0"
           class="hidden md:block"
           :photos="item.photos"
           :pagination-padding-right="mainColumnWidth"
-        />       
+        />
+      </ClientOnly>
     </Transition>  
     </template>
   </MainContentSkeleton>

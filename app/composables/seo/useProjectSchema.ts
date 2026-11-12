@@ -48,13 +48,13 @@ export const useProjectSchema = (item: MaybeRefOrGetter<ProjectSchemaItem | unde
     genre: project.value?.type || undefined,
   }))
 
-  useHead({
-    script: [
-      {
-        id: 'project-creativework-schema',
-        type: 'application/ld+json',
-        innerHTML: computed(() => JSON.stringify(schemaData.value)),
-      },
-    ],
-  })
+  useHead(() => ({
+  script: [
+    {
+      key: 'project-creativework-schema',
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(schemaData.value).replace(/</g, '\\u003C'),
+    },
+  ],
+}))
 }
